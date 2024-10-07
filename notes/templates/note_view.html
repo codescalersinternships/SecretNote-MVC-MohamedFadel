@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Secret Note</title>
+  </head>
+  <body>
+    <h1>Secret Note</h1>
+    <p>{{ content }}</p>
+    {% if deleted %}
+        <p>This note has now been deleted</p>
+    {% endif %}
+  </body>
+</html>
