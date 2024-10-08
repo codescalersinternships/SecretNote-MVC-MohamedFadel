@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 
 from .form import SecretNoteForm
@@ -22,3 +22,18 @@ def create_note(request):
     else:
         form = SecretNoteForm()
     return render(request, "create_note.html", {"form": form})
+
+
+def view_note(request, url_key):
+    note = get_object_or_404(SecretNote, url_key=url_key)
+    if note.is_expired():
+        note.delete()
+        return render(request, "note_expired.html")
+
+    note.increment_view()
+    if note.is_expired():
+        content = note.content
+        note.delete()
+        return render(request, "note_view.html", {"content": content, "deleted": True})
+
+    return render(request, "note_view.html", {"content": note.content, "deleted": False})
