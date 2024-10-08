@@ -23,3 +23,16 @@ class SecretNoteModelTest(TestCase):
             expiration_time=timezone.now + timezone.timedelta(hours=1),
         )
         self.assertFalse(valid_note.is_expired())
+
+
+class SecretNoteFormTest(TestCase):
+    def test_valid_form(self):
+        form_data = {"content": "Test note", "max_views": 5, "expiration_hours": 24}
+        form = SecretNoteForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_form(self):
+        form_data = {"content": "", "max_views": 0, "expiration_hours": 100}
+        form = SecretNoteForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 3)
