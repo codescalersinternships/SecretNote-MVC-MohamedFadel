@@ -18,7 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", include("notes.urls"))
-]
+from notes.views import ratelimit_error
+
+urlpatterns = [path("admin/", admin.site.urls), path("", include("notes.urls"))]
+
+handler429 = ratelimit_error
