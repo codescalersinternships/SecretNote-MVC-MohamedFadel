@@ -6,7 +6,7 @@ from .form import SecretNoteForm
 from .models import SecretNote
 
 
-@ratelimit(key="ip", rate="5/m", method=["GET", "POST"], block=True)
+@ratelimit(key="ip", rate="5/m", method=["GET", "POST"])
 def create_note(request):
     if request.method == "POST":
         form = SecretNoteForm(request.POST)
@@ -26,7 +26,7 @@ def create_note(request):
     return render(request, "create_note.html", {"form": form})
 
 
-@ratelimit(key="ip", rate="10/m", method=["GET"], block=True)
+@ratelimit(key="ip", rate="10/m", method=["GET"])
 def view_note(request, url_key):
     note = get_object_or_404(SecretNote, url_key=url_key)
     if note.is_expired():
@@ -44,5 +44,5 @@ def view_note(request, url_key):
     )
 
 
-def ratelimit_error(request):
+def ratelimit_error(request, exception=None):
     return render(request, "ratelimit_error.html", status=429)

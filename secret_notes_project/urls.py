@@ -23,3 +23,4 @@ from notes.views import ratelimit_error
 urlpatterns = [path("admin/", admin.site.urls), path("", include("notes.urls"))]
 
 handler429 = ratelimit_error
+handler403 = ratelimit_error
