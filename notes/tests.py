@@ -51,3 +51,19 @@ class NoteCreationViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Your Secret Note has been created")
         self.assertEqual(SecretNote.objects.count(), 1)
+
+
+class NoteViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.note = SecretNote.objects.create(content="Test note content", max_views=2)
+
+    def test_view_note(self):
+        response = self.client.get(reverse("view_note", args=[self.note.url_key]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Test note content")
+
+        response = self.client.get(reverse("view_note", args=[self.note.url_key]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "This note has now been deleted")
+        self.assertEqual(SecretNote.objects.count(), 0)
