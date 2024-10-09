@@ -1,9 +1,18 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django_ratelimit.decorators import ratelimit
 
 from .form import SecretNoteForm
 from .models import SecretNote
+
+
+@ratelimit(key="ip", rate="5/m", method=["GET"])
+def index(request):
+    url_key = request.GET.get("url_key")
+    if url_key:
+        return redirect("view_note", url_key=url_key)
+
+    return render(request, "index.html")
 
 
 @ratelimit(key="ip", rate="5/m", method=["GET", "POST"])
@@ -27,8 +36,14 @@ def create_note(request):
 
 
 @ratelimit(key="ip", rate="10/m", method=["GET"])
-def view_note(request, url_key):
+def view_note(request, url_key=None):
+    if not url_key or url_key == "00000000-0000-0000-0000-000000000000":
+        url_key = request.GET.get("url_key")
+        if not url_key:
+            return redirect("index")
+
     note = get_object_or_404(SecretNote, url_key=url_key)
+
     if note.is_expired():
         note.delete()
         return render(request, "note_expired.html")

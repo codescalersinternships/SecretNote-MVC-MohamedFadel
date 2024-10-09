@@ -3,13 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
     <title>View Secret Note</title>
   </head>
   <body>
     <h1>Secret Note</h1>
     <p>{{ content }}</p>
     {% if deleted %}
-        <p>This note has now been deleted</p>
+        <p class="deleted">This note has now been deleted</p>
     {% endif %}
+    <p><a href="{% url 'index' %}">Back to Home</a></p>
   </body>
 </html>

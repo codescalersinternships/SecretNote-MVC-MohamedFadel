@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secret Note</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to Secret Notes</h1>
+
+      <section class="card">
+        <h2>Create a New Note</h2>
+        <p>
+          Securely create a note that will be accessible through a unique URL
+          link.
+        </p>
+        <a class="button" href="{% url 'create_note' %}"
+          >Create a New Secret Note</a
+        >
+      </section>
+
+      <section class="card">
+        <h2>View an Existing Note</h2>
+        <p>Enter the URL key of the note you want to view:</p>
+        <form action="{% url 'index' %}" method="get">
+          <input
+            type="text"
+            name="url_key"
+            placeholder="Enter note URL key"
+            required
+          />
+          <button type="submit">View Note</button>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>

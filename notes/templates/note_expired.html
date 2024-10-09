@@ -3,10 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
     <title>Note Expired</title>
   </head>
   <body>
     <h1>Note Expired</h1>
     <p>This note has expired or has already been viewed.</p>
+    <p><a href="{% url 'index' %}">Back to Home</a></p>
   </body>
 </html>
