@@ -8,7 +8,7 @@
   <body>
     <h1>Create a Secret Note</h1>
     <form method="post">
-      {{ form.as_p }}
+      {% csrf_token %} {{ form.as_p }}
       <button type="submit">Create Note</button>
     </form>
   </body>
