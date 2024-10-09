@@ -1,3 +1,6 @@
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django_ratelimit.decorators import ratelimit
@@ -15,12 +18,14 @@ def index(request):
     return render(request, "index.html")
 
 
+@login_required
 @ratelimit(key="ip", rate="5/m", method=["GET", "POST"])
 def create_note(request):
     if request.method == "POST":
         form = SecretNoteForm(request.POST)
         if form.is_valid():
             note = form.save(commit=False)
+            note.user = request.user
 
             if form.cleaned_data["expiration_hours"]:
                 note.expiration_time = timezone.now() + timezone.timedelta(
@@ -61,3 +66,16 @@ def view_note(request, url_key=None):
 
 def ratelimit_error(request, exception=None):
     return render(request, "ratelimit_error.html", status=429)
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("index")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "register.html", {"form": form})

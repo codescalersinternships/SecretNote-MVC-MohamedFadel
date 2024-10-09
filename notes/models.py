@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
@@ -11,6 +12,7 @@ class SecretNote(models.Model):
     max_views = models.PositiveIntegerField(default=1)
     views = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def is_expired(self):
         if self.expiration_time and timezone.now() > self.expiration_time:

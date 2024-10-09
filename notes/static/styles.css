@@ -6,18 +6,9 @@ body {
   padding: 0;
 }
 
+.form-container,
 .container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.form-container {
-  max-width: 400px; 
+  max-width: 400px;
   margin: 100px auto;
   padding: 30px;
   background: #ffffff;
@@ -25,22 +16,31 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+.container {
+  max-width: 600px;
+}
+
+h1,
+h2,
+p {
+  text-align: center;
+}
+
 h1,
 h2 {
-  text-align: center;
   color: #2c3e50;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 15px;
   padding: 20px;
 }
 
 input[type="text"],
-textarea {
+textarea,
+.form-group input {
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -55,7 +55,8 @@ textarea:focus {
   border-color: #5cb85c;
 }
 
-button {
+button,
+.form-container button {
   padding: 12px;
   background-color: #5cb85c;
   border: none;
@@ -64,25 +65,25 @@ button {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 100%;
 }
 
 button:hover {
   background-color: #4cae4c;
 }
 
-a {
+a.button {
+  padding: 12px;
+}
+
+a:not(.button) {
   color: #3498db;
   text-decoration: none;
   transition: color 0.3s;
 }
 
-a:hover {
+a:not(.button):hover {
   color: #2980b9;
-}
-
-p {
-  text-align: center;
-  font-size: 18px;
 }
 
 .card {
@@ -106,5 +107,61 @@ p {
 
 .form-group {
   display: flex;
-  justify-content:space-between;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.error,
+.errorlist {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.errorlist {
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.button {
+  padding: 8px 16px;
+  background-color: #5cb85c;
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #4cae4c;
+}
+
+.logout-button {
+  background-color: #d9534f;
+}
+
+.logout-button:hover {
+  background-color: #c9302c;
 }
