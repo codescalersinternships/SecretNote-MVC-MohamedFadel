@@ -37,3 +37,17 @@ class SecretNoteFormTest(TestCase):
         form = SecretNoteForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 2)
+
+
+class NoteCreationViewTest(TestCase):
+    def setUP(self):
+        self.client = Client()
+
+    def test_create_note(self):
+        response = self.client.post(
+            reverse("create_note"),
+            {"content": "Test note content", "max_views": 3, "expiration_hours": 24},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Your Secret Note has been created")
+        self.assertEqual(SecretNote.objects.count(), 1)
