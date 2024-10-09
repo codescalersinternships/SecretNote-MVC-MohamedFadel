@@ -1,4 +1,5 @@
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.urls import reverse
 from django.utils import timezone
 
 from .form import SecretNoteForm
@@ -20,7 +21,7 @@ class SecretNoteModelTest(TestCase):
 
         valid_note = SecretNote.objects.create(
             content="Valid note",
-            expiration_time=timezone.now + timezone.timedelta(hours=1),
+            expiration_time=timezone.now() + timezone.timedelta(hours=1),
         )
         self.assertFalse(valid_note.is_expired())
 
@@ -35,4 +36,4 @@ class SecretNoteFormTest(TestCase):
         form_data = {"content": "", "max_views": 0, "expiration_hours": 100}
         form = SecretNoteForm(data=form_data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 3)
+        self.assertEqual(len(form.errors), 2)

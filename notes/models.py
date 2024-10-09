@@ -16,7 +16,7 @@ class SecretNote(models.Model):
         if self.expiration_time and timezone.now() > self.expiration_time:
             return True
 
-        if self.views > self.max_views:
+        if self.views >= self.max_views:
             return True
 
         return False
