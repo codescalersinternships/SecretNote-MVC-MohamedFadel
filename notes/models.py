@@ -8,7 +8,7 @@ class SecretNote(models.Model):
     content = models.TextField()
     url_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     expiration_time = models.DateTimeField(null=True, blank=True)
-    max_views = models.IntegerField(default=1)
+    max_views = models.PositiveIntegerField(default=1)
     views = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
