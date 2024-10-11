@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=secretnote
+      - POSTGRES_USER=secretnote
+      - POSTGRES_PASSWORD=secretnote
+
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn secret_notes_project.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://secretnote:secretnote@db/secretnote
+      - DEBUG=False
+    depends_on:
+      - db
+
+volumes:
+  static_volume:
