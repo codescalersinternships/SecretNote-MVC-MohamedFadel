@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-gp1gt41n0po!a6$8!v3a)w=#053opjfcuj=0wv12jcbk$x*q2y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "notes",
-    # "ratelimit",
 ]
 
 MIDDLEWARE = [
@@ -87,8 +86,8 @@ DATABASES = {
         "NAME": os.environ.get("POSTGRES_DB", "secretnote"),
         "USER": os.environ.get("POSTGRES_USER", "secretnote"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "secretnote"),
-        "HOST": "db",
-        "PORT": 5432,
+        "HOST": os.environ.get("POSTGRES_HOST", "db"),
+        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }
 }
 

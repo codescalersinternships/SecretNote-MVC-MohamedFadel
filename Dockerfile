@@ -1,20 +1,17 @@
-FROM python:3.10-slim
+FROM python:3.10-alpine
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache gcc musl-dev  # Include musl-dev for Python package compilation
 
-COPY requirements.txt /app/
-RUN pip install --upgrade pip && pip install -r requirements.txt
+COPY requirements.txt .
 
-COPY . /app/
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-RUN mkdir -p /app/static
+COPY . .
 
 RUN python manage.py collectstatic --noinput
 

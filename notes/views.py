@@ -9,7 +9,7 @@ from .form import SecretNoteForm
 from .models import SecretNote
 
 
-@ratelimit(key="ip", rate="5/m", method=["GET"])
+@ratelimit(key="ip", rate="15/m", method=["GET"])
 def index(request):
     url_key = request.GET.get("url_key")
     if url_key:
@@ -19,7 +19,7 @@ def index(request):
 
 
 @login_required
-@ratelimit(key="ip", rate="5/m", method=["GET", "POST"])
+@ratelimit(key="ip", rate="15/m", method=["GET", "POST"])
 def create_note(request):
     if request.method == "POST":
         form = SecretNoteForm(request.POST)
@@ -40,7 +40,7 @@ def create_note(request):
     return render(request, "create_note.html", {"form": form})
 
 
-@ratelimit(key="ip", rate="10/m", method=["GET"])
+@ratelimit(key="ip", rate="15/m", method=["GET"])
 def view_note(request, url_key=None):
     if not url_key or url_key == "00000000-0000-0000-0000-000000000000":
         url_key = request.GET.get("url_key")
