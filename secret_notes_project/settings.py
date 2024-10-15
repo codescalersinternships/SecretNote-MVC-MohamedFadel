@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -80,16 +82,7 @@ WSGI_APPLICATION = "secret_notes_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("POSTGRES_DB", "secretnote"),
-        "USER": os.environ.get("POSTGRES_USER", "secretnote"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "secretnote"),
-        "HOST": os.environ.get("POSTGRES_HOST", "db"),
-        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
-    }
-}
+DATABASES = {"default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))}
 
 
 # Password validation

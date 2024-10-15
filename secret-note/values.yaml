@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: mohamedfadel01/secret-note
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 8008
+
+database:
+  name: secretnote
+  user: secretnote
+  password: secretnote
+  host: secret-note-db
+  port: "5432"
+  url: postgres://secretnote:secretnote@secret-note-db:5432/secretnote
+
+secretKey: "django-insecure-gp1gt41n0po!a6$8!v3a)w=#053opjfcuj=0wv12jcbk$x*q2y"
+debug: "False"
+
+postgresql:
+  image:
+    repository: postgres
+    tag: 17.0-alpine3.20
+  storage:
+    size: 1Gi

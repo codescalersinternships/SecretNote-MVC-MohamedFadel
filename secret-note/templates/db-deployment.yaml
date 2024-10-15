@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-note-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secret-note-db
+  template:
+    metadata:
+      labels:
+        app: secret-note-db
+    spec:
+      containers:
+        - name: postgres
+          image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: secret-note-config
+            - secretRef:
+                name: secret-note-secret
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: secret-note-db-pvc

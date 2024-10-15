@@ -5,14 +5,16 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apk add --no-cache gcc musl-dev  # Include musl-dev for Python package compilation
+RUN apk add --no-cache gcc musl-dev
 
 COPY requirements.txt .
-
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
 RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "secret_notes_project.wsgi:application"]
+COPY wait_for_db.sh /wait_for_db.sh
+RUN chmod +x /wait_for_db.sh
+
+CMD sh -c "/wait_for_db.sh && python manage.py migrate && python manage.py collectstatic --noinput && exec gunicorn secret_notes_project.wsgi:application --bind 0.0.0.0:8008"
