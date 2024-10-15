@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <title>Note Created</title>
+  </head>
+  <body>
+    <h1>Your Secret Note has been created</h1>
+    <p><strong>URL Key:</strong> {{ note.url_key }}</p>
+
+    <p>Share this link to view the note:</p>
+    <p>
+      <a href="{% url 'view_note' note.url_key %}"
+        >{% url 'view_note' note.url_key %}</a
+      >
+    </p>
+    <p><a href="{% url 'index' %}">Back to Home</a></p>
+  </body>
+</html>

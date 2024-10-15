@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <title>Rate Limit Exceeded</title>
+  </head>
+  <body>
+    <h1>Rate Limit Exceeded</h1>
+    <p>You have exceeded the rate limit. Please try again later.</p>
+    <p><a href="{% url 'index' %}">Back to Home</a></p>
+  </body>
+</html>

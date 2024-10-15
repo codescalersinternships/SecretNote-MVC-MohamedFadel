@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secret Note</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Welcome to Secret Notes</h1>
+        {% if user.is_authenticated %}
+        <div class="user-actions">
+          <span>Hello, {{ user.username }}!</span>
+          <form
+            method="post"
+            action="{% url 'logout' %}"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button type="submit" class="button logout-button">Logout</button>
+          </form>
+        </div>
+        {% else %}
+        <div class="user-actions">
+          <a href="{% url 'login' %}" class="button">Login</a>
+          <a href="{% url 'register' %}" class="button">Register</a>
+        </div>
+        {% endif %}
+      </header>
+
+      <section class="card">
+        <h2>Create a New Note</h2>
+        <p>
+          Securely create a note that will be accessible through a unique URL
+          link.
+        </p>
+        <a class="button" href="{% url 'create_note' %}"
+          >Create a New Secret Note</a
+        >
+      </section>
+
+      <section class="card">
+        <h2>View an Existing Note</h2>
+        <p>Enter the URL key of the note you want to view:</p>
+        <form action="{% url 'index' %}" method="get">
+          <input
+            type="text"
+            name="url_key"
+            placeholder="Enter note URL key"
+            required
+          />
+          <button type="submit">View Note</button>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>

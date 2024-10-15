@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Secret Note</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>Create a Secret Note</h1>
+      <form method="post">
+        {% csrf_token %}
+        <div>
+          {{ form.non_field_errors }}
+          <label for="id_content">Note Content:</label>
+          {{ form.content }}
+        </div>
+        <div class="form-group">
+          <label for="id_max_views">Max Views:</label>
+          {{ form.max_views }}
+        </div>
+        <div class="form-group">
+          <label for="id_expiration_hours">Expiration Hours:</label>
+          {{ form.expiration_hours }}
+        </div>
+        <button type="submit" class="submit-button">Create Note</button>
+      </form>
+      <p><a href="{% url 'index' %}">Back to Home</a></p>
+    </div>
+  </body>
+</html>
