@@ -104,7 +104,7 @@ class IntegrationTests(TestCase):
     def test_rate_limiting(self):
         view_url = reverse("index")
 
-        for _ in range(5):
+        for _ in range(15):
             response = self.client.get(view_url)
             self.assertEqual(response.status_code, 200)
 
