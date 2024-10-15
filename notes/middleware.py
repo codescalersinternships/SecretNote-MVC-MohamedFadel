@@ -1,4 +1,3 @@
-from django.http import HttpResponseForbidden, HttpResponseNotFound
 from django.shortcuts import render
 from django_ratelimit.exceptions import Ratelimited
 
